@@ -307,6 +307,163 @@ h1 span { color: var(--gold); font-style: italic; }
 }
 .kiss-close:hover { border-color:var(--gold); color:var(--gold); }
 
+/* ── MOMENT OVERLAY (< 12h) ── */
+.moment-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 2000;
+  background: linear-gradient(135deg, #0a0402 0%, #1a0808 40%, #0d0a02 100%);
+  overflow-y: auto;
+  align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.moment-overlay.active {
+  display: flex;
+  animation: momentIn 1.8s ease forwards;
+}
+@keyframes momentIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.moment-particles {
+  position: fixed; inset: 0;
+  pointer-events: none; overflow: hidden; z-index: 0;
+}
+.moment-particle {
+  position: absolute; bottom: -30px;
+  animation: floatM linear infinite;
+  opacity: 0;
+}
+@keyframes floatM {
+  0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  8%   { opacity: 0.7; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+.moment-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 4rem 2rem 5rem;
+  max-width: 560px;
+  width: 100%;
+}
+
+.moment-eyebrow {
+  font-style: italic; font-size: 1rem;
+  letter-spacing: 0.35em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+}
+
+.moment-title {
+  font-family: 'Italiana', serif;
+  font-size: clamp(3.5rem, 10vw, 6.5rem);
+  font-weight: 400; line-height: 1.0;
+  color: var(--cream); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.6s;
+}
+.moment-title span {
+  color: var(--gold); font-style: italic;
+  display: block;
+}
+
+.moment-divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.8rem; margin: 1.8rem auto;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s;
+}
+.moment-div-line {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,169,110,0.6));
+}
+.moment-div-line:last-child {
+  background: linear-gradient(to left, transparent, rgba(201,169,110,0.6));
+}
+.moment-div-icon { color: var(--gold); font-size: 0.8rem; }
+
+.moment-msg {
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: var(--cream); line-height: 1.6;
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 1.1s;
+}
+.moment-msg2 {
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+  color: rgba(245,240,232,0.75); line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 1.4s;
+}
+.moment-love {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 1.7s;
+  text-shadow: 0 0 40px rgba(201,169,110,0.5);
+}
+
+/* Mini countdown inside moment */
+.moment-countdown {
+  display: flex; align-items: flex-start;
+  justify-content: center; gap: 1rem;
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 2s;
+}
+.moment-unit {
+  display: flex; flex-direction: column; align-items: center; gap: 0.3em;
+}
+.moment-unit span {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  line-height: 1; color: var(--cream);
+  text-shadow: 0 0 30px rgba(201,169,110,0.3);
+}
+.moment-unit small {
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  color: var(--gold); text-transform: uppercase;
+}
+.moment-sep {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  color: var(--gold); opacity: 0.4; line-height: 1;
+  padding-top: 0.05em;
+}
+
+/* Kiss photo */
+.moment-photo {
+  width: min(100%, 420px);
+  border-radius: 2px;
+  display: block; margin: 0 auto;
+  filter: sepia(10%) contrast(1.05);
+  opacity: 0; animation: fadeUp 1.2s ease forwards 2.3s;
+  position: relative;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+}
+/* Gold corners on kiss photo */
+.moment-photo-wrap {
+  position: relative; display: inline-block;
+  opacity: 0; animation: fadeUp 1.2s ease forwards 2.3s;
+}
+.moment-photo-wrap::before {
+  content:''; position:absolute; top:12px; left:12px;
+  width:32px; height:32px;
+  border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); z-index:1;
+}
+.moment-photo-wrap::after {
+  content:''; position:absolute; bottom:12px; right:12px;
+  width:32px; height:32px;
+  border-bottom:1.5px solid var(--gold); border-right:1.5px solid var(--gold); z-index:1;
+}
+.moment-photo-wrap img {
+  width: min(100%, 420px);
+  border-radius: 2px; display: block;
+  filter: sepia(10%) contrast(1.05);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+}
+
 /* ── FLIGHTS SECTION ── */
 .flights-section {
   padding: 4rem 2rem 3rem;
@@ -724,7 +881,7 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
     </div>
     <div class="flights-title-block">
       <p class="flights-eyebrow">Ya tenemos plan</p>
-      <h2 class="flights-title">Mis vuelos<br><span>a Luxemburgo para seguir la aventura</span></h2>
+      <h2 class="flights-title">Nuestro vuelo<br><span>a Luxemburgo</span></h2>
       <p class="flights-ref">Referencia: <strong>BTT7FB</strong></p>
     </div>
   </div>
@@ -798,6 +955,33 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
   </div>
 </section>
 
+<!-- MOMENTO ESPECIAL OVERLAY (< 12h) -->
+<div class="moment-overlay" id="momentOverlay">
+  <div class="moment-particles" id="momentParticles"></div>
+  <div class="moment-content">
+    <p class="moment-eyebrow">El momento ha llegado</p>
+    <h2 class="moment-title">Ya casi<br><span>estamos ahí</span></h2>
+    <div class="moment-divider">
+      <span class="moment-div-line"></span>
+      <span class="moment-div-icon">✦</span>
+      <span class="moment-div-line"></span>
+    </div>
+    <p class="moment-msg">La espera ha sido larga<br>pero va a merecer mucho la pena.</p>
+    <p class="moment-msg2">Estoy deseando compartir<br>estos días contigo.</p>
+    <p class="moment-love">Te quiero ♥</p>
+    <div class="moment-countdown">
+      <div class="moment-unit"><span id="mHours">--</span><small>horas</small></div>
+      <div class="moment-sep">:</div>
+      <div class="moment-unit"><span id="mMinutes">--</span><small>minutos</small></div>
+      <div class="moment-sep">:</div>
+      <div class="moment-unit"><span id="mSeconds">--</span><small>segundos</small></div>
+    </div>
+    <div class="moment-photo-wrap">
+      <img src="IMG_3676.jpg" alt="El beso">
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <span class="hearts">🥂 · 🦁 · 🥂</span>
@@ -808,20 +992,73 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 // COUNTDOWN
 const target = new Date('2026-04-22T22:45:00');
 function pad(n){ return String(n).padStart(2,'0'); }
+
+const momentOverlay = document.getElementById('momentOverlay');
+let momentActive = false;
+
+function activateMoment() {
+  if (momentActive) return;
+  momentActive = true;
+  momentOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  launchMomentParticles();
+}
+
+function launchMomentParticles() {
+  const symbols = ['💋','🥂','✦','❤️','💋','🥂','💋','✈️','💋'];
+  const container = document.getElementById('momentParticles');
+  // continuous stream
+  setInterval(() => {
+    for (let i = 0; i < 3; i++) {
+      const p = document.createElement('div');
+      p.className = 'moment-particle';
+      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      p.style.left = (Math.random() * 100) + 'vw';
+      p.style.fontSize = (0.9 + Math.random() * 1.4) + 'rem';
+      p.style.animationDuration = (6 + Math.random() * 12) + 's';
+      p.style.animationDelay = (Math.random() * 2) + 's';
+      container.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }
+  }, 300);
+}
+
 function tick(){
   const diff = target - new Date();
+  const totalHours = diff / 3600000;
+
+  // Trigger special mode under 12 hours
+  if (totalHours <= 12 && diff > 0) {
+    activateMoment();
+  }
+
   if(diff <= 0){
     ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00');
     document.getElementById('arrived-msg').textContent = '¡El momento ha llegado! 🥂';
+    // update mini countdown too
+    ['mHours','mMinutes','mSeconds'].forEach(id => document.getElementById(id).textContent='00');
     return;
   }
+
   const days=Math.floor(diff/86400000), hours=Math.floor((diff%86400000)/3600000),
         minutes=Math.floor((diff%3600000)/60000), seconds=Math.floor((diff%60000)/1000);
+
   function update(id,val){
     const el=document.getElementById(id), v=pad(val);
-    if(el.textContent!==v){ el.textContent=v; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+    if(el && el.textContent!==v){ el.textContent=v; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
   }
   update('days',days); update('hours',hours); update('minutes',minutes); update('seconds',seconds);
+
+  // Update mini countdown in moment overlay
+  if (momentActive) {
+    const mh = document.getElementById('mHours');
+    const mm = document.getElementById('mMinutes');
+    const ms = document.getElementById('mSeconds');
+    const remainH = Math.floor(diff / 3600000);
+    if(mh) mh.textContent = pad(remainH);
+    if(mm) mm.textContent = pad(minutes);
+    if(ms) ms.textContent = pad(seconds);
+  }
 }
 tick(); setInterval(tick,1000);
 
