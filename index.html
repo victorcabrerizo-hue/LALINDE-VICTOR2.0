@@ -669,6 +669,35 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 @keyframes kissReveal { from{opacity:0;transform:scale(0.88) translateY(24px);} to{opacity:1;transform:scale(1) translateY(0);} }
 
 @media (max-width:520px) { .sep{display:none;} .countdown{gap:1.2rem;} }
+
+/* Texto final más delicado dentro del overlay */
+.moment-soft {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.86em;
+  line-height: 1.55;
+  letter-spacing: 0.025em;
+  color: #e7c9a0;
+  opacity: 0.92;
+}
+
+.moment-soft .soft-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(10px);
+  text-shadow: 0 0 18px rgba(231, 201, 160, 0.10);
+  animation: softReveal 0.9s ease forwards;
+}
+
+.moment-soft .soft-line:nth-child(1) { animation-delay: 1.95s; }
+.moment-soft .soft-line:nth-child(2) { animation-delay: 2.35s; }
+.moment-soft .soft-line:nth-child(3) { animation-delay: 2.75s; }
+
+@keyframes softReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 0.92; transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
@@ -865,7 +894,7 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 <div class="kiss-overlay" id="kissOverlay">
   <div class="kiss-inner">
     <div class="kiss-frame">
-      <img src="IMG_3676.jpg" alt="El beso en Luxemburgo">
+      <img src="kiss.gif" alt="El beso en Luxemburgo">
     </div>
     <p class="kiss-caption">Y millones de besos como este.</p>
     <button class="kiss-close" id="kissClose">cerrar</button>
@@ -967,7 +996,15 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
       <span class="moment-div-line"></span>
     </div>
     <p class="moment-msg">La espera ha sido larga<br>pero va a merecer mucho la pena.</p>
-    <p class="moment-msg2">Estoy deseando compartir estos días contigo...<br>vivirlos intensamente, dejarnos llevar....<br> espero que despues de este fin de semana<br>♥ Te lo creas un poco mas...<br>♥ Las dudas y miedos sean cada vez menos...</p>
+    <p class="moment-msg2">
+Estoy deseando compartir estos días contigo...<br>
+vivirlos intensamente, dejarnos llevar....<br>
+<span class="moment-soft" id="momentSoftBlock">
+  <span class="soft-line">espero que despues de este fin de semana</span><br>
+  <span class="soft-line">♥ Te lo creas un poco mas...</span><br>
+  <span class="soft-line">♥ Las dudas y miedos sean cada vez menos...</span>
+</span>
+</p>
     <p class="moment-love">Te quiero ♥</p>
     <div class="moment-countdown">
       <div class="moment-unit"><span id="mHours">--</span><small>horas</small></div>
@@ -977,7 +1014,7 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
       <div class="moment-unit"><span id="mSeconds">--</span><small>segundos</small></div>
     </div>
     <div class="moment-photo-wrap">
-      <img src="IMG_3676.jpg" alt="El beso">
+      <img src="kiss.gif" alt="El beso">
     </div>
   </div>
 </div>
@@ -995,6 +1032,24 @@ function pad(n){ return String(n).padStart(2,'0'); }
 
 const momentOverlay = document.getElementById('momentOverlay');
 let momentActive = false;
+
+const softBlock = document.getElementById('momentSoftBlock');
+
+function unlockSoftMessage() {
+  try { localStorage.setItem('luxSoftUnlocked', '1'); } catch(e) {}
+  if (softBlock) softBlock.classList.remove('locked');
+}
+
+function applySoftMessageState() {
+  let unlocked = false;
+  try { unlocked = localStorage.getItem('luxSoftUnlocked') === '1'; } catch(e) {}
+  if (softBlock) {
+    if (unlocked) softBlock.classList.remove('locked');
+    else softBlock.classList.add('locked');
+  }
+}
+applySoftMessageState();
+
 
 function activateMoment() {
   if (momentActive) return;
@@ -1143,6 +1198,7 @@ function stopKissRain(){
   if(kissRainInterval){ clearInterval(kissRainInterval); kissRainInterval=null; }
 }
 btnAccept.addEventListener('click', e => {
+  unlockSoftMessage();
   spawnCremant(e.clientX, e.clientY);
   setTimeout(()=>{
     kissOverlay.classList.add('active');
