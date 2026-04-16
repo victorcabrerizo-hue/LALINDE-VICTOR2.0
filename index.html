@@ -690,12 +690,35 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 }
 
 .moment-soft .soft-line:nth-child(1) { animation-delay: 1.95s; }
-.moment-soft .soft-line:nth-child(2) { animation-delay: 2.35s; }
-.moment-soft .soft-line:nth-child(3) { animation-delay: 2.75s; }
+.moment-soft .soft-line:nth-child(2) { animation-delay: 2.30s; }
+.moment-soft .soft-line:nth-child(3) { animation-delay: 2.65s; }
+.moment-soft .soft-line:nth-child(4) { animation-delay: 3.00s; }
 
 @keyframes softReveal {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 0.92; transform: translateY(0); }
+}
+
+
+/* GIF final más protagonista */
+.moment-photo-wrap {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow: visible;
+}
+
+.moment-photo-wrap img {
+  width: min(100%, 540px);
+  transform: scale(1.08);
+  filter: sepia(5%) contrast(1.08) brightness(1.02);
+  animation: kissCinematicZoom 8s ease-in-out infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes kissCinematicZoom {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.11); }
 }
 
 </style>
@@ -995,15 +1018,19 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
       <span class="moment-div-icon">✦</span>
       <span class="moment-div-line"></span>
     </div>
-    <p class="moment-msg">La espera ha sido larga...pero va a merecer la pena cada segundo!</p>
-    <p class="moment-msg2">
-Estoy deseando compartir estos días contigo...vivirlos intensamente...<br>
- dejarnos llevar....<br>
+    <p class="moment-msg">
+La espera ha sido larga... pero va a merecer cada segundo.
+</p>
+
+<p class="moment-msg2">
+Estoy deseando compartir estos días contigo...<br>
+vivirlos intensamente... dejarnos llevar.<br>
+
 <span class="moment-soft" id="momentSoftBlock">
-  <span class="soft-line">Espero que despues de este fin de semana:</span><br>
-  <span class="soft-line">♥ Te lo creas un poco mas...</span><br>
-  <span class="soft-line">♥ Las dudas y miedos sean cada vez menos...</span><br>
-  <span class="soft-line">Y que esta aventura continue...♥♥</span>
+  <span class="soft-line">Después de este fin de semana...</span><br>
+  <span class="soft-line">♥ ojalá lo sientas un poco más claro</span><br>
+  <span class="soft-line">♥ y todo sea un poco más fácil</span><br>
+  <span class="soft-line">Y que esta aventura simplemente continúe... ♥♥</span>
 </span>
 </p>
     <p class="moment-love">Te quiero ♥</p>
