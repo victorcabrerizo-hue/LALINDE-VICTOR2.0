@@ -709,16 +709,13 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 
 .moment-photo-wrap img {
   width: min(100%, 540px);
-  transform: scale(1.08);
+  transform: scale(var(--kiss-scale, 1.06));
   filter: sepia(5%) contrast(1.08) brightness(1.02);
-  animation: kissCinematicZoom 8s ease-in-out infinite alternate;
+  transition: transform 0.7s ease-out, filter 0.7s ease-out;
   transform-origin: center center;
   will-change: transform;
 }
-
-@keyframes kissCinematicZoom {
-  from { transform: scale(1.04); }
-  to   { transform: scale(1.11); }
+to   { transform: scale(1.11); }
 }
 
 </style>
@@ -1038,6 +1035,8 @@ vivirlos intensamente... y dejarnos llevar.<br>
       <div class="moment-unit"><span id="mHours">--</span><small>horas</small></div>
       <div class="moment-sep">:</div>
       <div class="moment-unit"><span id="mMinutes">--</span><small>minutos</small></div>
+      <div class="moment-sep">:</div>
+      <div class="moment-unit"><span id="mSeconds">--</span><small>segundos</small></div>
     </div>
     <div class="moment-photo-wrap">
       <img src="kiss.gif" alt="El beso">
@@ -1060,6 +1059,34 @@ const momentOverlay = document.getElementById('momentOverlay');
 let momentActive = false;
 
 const softBlock = document.getElementById('momentSoftBlock');
+
+const kissGif = document.querySelector('.moment-photo-wrap img');
+
+function updateKissScale(diffMs) {
+  if (!kissGif) return;
+
+  // Base intensity from remaining time inside the last 12h window
+  const windowMs = 12 * 3600000;
+  const bounded = Math.max(0, Math.min(windowMs, diffMs));
+  const progress = 1 - (bounded / windowMs); // 0 -> far, 1 -> near
+  const baseScale = 1.04 + (progress * 0.10); // 1.04 to 1.14
+  kissGif.style.setProperty('--kiss-scale', baseScale.toFixed(3));
+}
+
+window.addEventListener('scroll', () => {
+  if (!kissGif || !momentActive) return;
+  const extra = Math.min(window.scrollY / 4000, 0.02);
+  const current = parseFloat(getComputedStyle(kissGif).getPropertyValue('--kiss-scale')) || 1.06;
+  kissGif.style.setProperty('--kiss-scale', Math.min(current + extra, 1.16).toFixed(3));
+}, { passive: true });
+
+if (kissGif) {
+  kissGif.addEventListener('mouseenter', () => {
+    const current = parseFloat(getComputedStyle(kissGif).getPropertyValue('--kiss-scale')) || 1.06;
+    kissGif.style.setProperty('--kiss-scale', Math.min(current + 0.015, 1.17).toFixed(3));
+  });
+}
+
 
 function unlockSoftMessage() {
   try { localStorage.setItem('luxSoftUnlocked', '1'); } catch(e) {}
@@ -1113,11 +1140,13 @@ function tick(){
     activateMoment();
   }
 
+  updateKissScale(diff);
+
   if(diff <= 0){
     ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00');
     document.getElementById('arrived-msg').textContent = '¡El momento ha llegado! 🥂';
     // update mini countdown too
-    ['mHours','mMinutes','mSeconds'].forEach(id => document.getElementById(id).textContent='00');
+    ['mHours','mMinutes','mSeconds'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent='00'; });
     return;
   }
 
