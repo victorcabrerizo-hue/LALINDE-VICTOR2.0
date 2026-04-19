@@ -923,6 +923,108 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
   50% { transform: scale(1.02); text-shadow: 0 0 28px rgba(221,185,106,0.25); }
 }
 
+
+
+/* ── TRANSICIÓN FINAL A NEGRO ── */
+.blackout-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2900;
+  background: #000;
+  opacity: 0;
+}
+.blackout-overlay.active {
+  display: block;
+  animation: blackoutFade 10s linear forwards;
+}
+@keyframes blackoutFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── ESTADO FINAL (LLEGADA) ── */
+.arrival-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: #000;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+.arrival-overlay.active {
+  display: flex;
+  animation: fadeInArrival 1.8s ease forwards;
+}
+@keyframes fadeInArrival {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.arrival-content {
+  width: min(92vw, 620px);
+}
+.arrival-title {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.08;
+  color: var(--cream);
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.2s;
+}
+.arrival-title span {
+  color: var(--gold);
+  font-style: italic;
+}
+.arrival-video-wrap {
+  position: relative;
+  display: inline-block;
+  width: min(100%, 430px);
+  margin: 0 auto 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1.2s ease forwards 0.55s;
+}
+.arrival-video-wrap::before,
+.arrival-video-wrap::after {
+  content:'';
+  position:absolute;
+  width:32px;
+  height:32px;
+  z-index:2;
+  pointer-events:none;
+}
+.arrival-video-wrap::before {
+  top:12px;
+  left:12px;
+  border-top:1.5px solid var(--gold);
+  border-left:1.5px solid var(--gold);
+}
+.arrival-video-wrap::after {
+  bottom:12px;
+  right:12px;
+  border-bottom:1.5px solid var(--gold);
+  border-right:1.5px solid var(--gold);
+}
+.arrival-video {
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.72);
+  filter: sepia(4%) contrast(1.05) brightness(0.98);
+}
+.arrival-text {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 30px rgba(221,185,106,0.22);
+  opacity: 0;
+  animation: fadeUp 1.2s ease forwards 0.95s;
+}
+
 </style>
 </head>
 <body>
@@ -1281,6 +1383,24 @@ vivirlos intensamente... y dejarnos llevar.<br>
   </div>
 </div>
 
+
+
+<!-- TRANSICIÓN FINAL A NEGRO -->
+<div class="blackout-overlay" id="blackoutOverlay"></div>
+
+<!-- ESTADO FINAL (LLEGADA) -->
+<div class="arrival-overlay" id="arrivalOverlay">
+  <div class="arrival-content">
+    <div class="arrival-title">Cristina &amp; <span>Víctor</span></div>
+    <div class="arrival-video-wrap">
+      <video class="arrival-video" id="arrivalVideo" autoplay muted loop playsinline preload="auto">
+        <source src="kiss2.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="arrival-text">Y ahora…. contigo ♥</p>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <span class="hearts">🥂 · 🦁 · 🥂</span>
@@ -1294,7 +1414,11 @@ function pad(n){ return String(n).padStart(2,'0'); }
 
 const momentOverlay = document.getElementById('momentOverlay');
 const threeDaysOverlay = document.getElementById('threeDaysOverlay');
+const blackoutOverlay = document.getElementById('blackoutOverlay');
+const arrivalOverlay = document.getElementById('arrivalOverlay');
+const arrivalVideo = document.getElementById('arrivalVideo');
 let momentActive = false;
+let arrivalSequenceStarted = false;
 
 const softBlock = document.getElementById('momentSoftBlock');
 
@@ -1373,6 +1497,32 @@ function launchMomentParticles() {
   }, 300);
 }
 
+
+
+function activateArrivalSequence() {
+  if (arrivalSequenceStarted) return;
+  arrivalSequenceStarted = true;
+  momentActive = false;
+  threeDaysActive = false;
+  if (threeDaysOverlay) threeDaysOverlay.classList.remove('active');
+  if (momentOverlay) momentOverlay.classList.remove('active');
+  if (mapLightbox) mapLightbox.classList.remove('active');
+  if (kissOverlay) kissOverlay.classList.remove('active');
+  stopKissRain();
+  document.body.style.overflow = 'hidden';
+  if (blackoutOverlay) blackoutOverlay.classList.add('active');
+
+  setTimeout(() => {
+    if (arrivalOverlay) arrivalOverlay.classList.add('active');
+    if (arrivalVideo) {
+      try {
+        arrivalVideo.currentTime = 0;
+        arrivalVideo.play().catch(() => {});
+      } catch(e) {}
+    }
+  }, 10000);
+}
+
 function tick(){
   const diff = target - new Date();
   const totalHours = diff / 3600000;
@@ -1388,10 +1538,17 @@ function tick(){
   }
 
   if(diff <= 0){
-    ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00');
-    document.getElementById('arrived-msg').textContent = '¡El momento ha llegado! 🥂';
-    // update mini countdown too
-    ['mHours','mMinutes','mSeconds'].forEach(id => document.getElementById(id).textContent='00');
+    ['days','hours','minutes','seconds'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent='00';
+    });
+    const arrived = document.getElementById('arrived-msg');
+    if (arrived) arrived.textContent = '';
+    ['mHours','mMinutes','mSeconds'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent='00';
+    });
+    activateArrivalSequence();
     return;
   }
 
