@@ -635,6 +635,106 @@ h1 span { color: var(--gold); font-style: italic; }
   .flight-name { font-size: 0.65rem; }
 }
 
+
+
+/* ── ESTADO FINAL (cuenta atrás terminada) ── */
+.ended-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 2200;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(221,185,106,0.14), transparent 30%),
+    radial-gradient(circle at 80% 25%, rgba(0,163,218,0.10), transparent 28%),
+    linear-gradient(135deg, #0b0604 0%, #1a1008 50%, #120906 100%);
+  overflow-y: auto;
+}
+.ended-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: threeDaysIn 1s ease forwards;
+}
+.ended-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 760px;
+  text-align: center;
+  padding: 4rem 1.5rem 5rem;
+}
+.ended-eyebrow {
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.32em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.1s;
+}
+.ended-title {
+  font-family: 'Italiana', serif;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 1.02;
+  color: var(--cream);
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.25s;
+}
+.ended-title span {
+  display: block;
+  color: var(--gold);
+  font-style: italic;
+}
+.ended-text {
+  max-width: 620px;
+  margin: 0 auto;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+  line-height: 1.7;
+  color: rgba(250,246,238,0.9);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.5s;
+}
+.ended-flight-box {
+  margin: 2.2rem auto 0;
+  max-width: 620px;
+  border: 1px solid rgba(221,185,106,0.22);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  padding: 1.6rem 1.4rem;
+  border-radius: 4px;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.8s;
+}
+.ended-flight-label {
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 0.7rem;
+}
+.ended-flight-route {
+  font-family: 'Italiana', serif;
+  font-size: clamp(1.1rem, 3.4vw, 1.8rem);
+  color: var(--cream);
+  line-height: 1.45;
+}
+.ended-flight-route strong {
+  color: var(--gold);
+  font-weight: 400;
+}
+.ended-question {
+  margin-top: 1.5rem;
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 6.5vw, 4rem);
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 36px rgba(221,185,106,0.28);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 1.1s;
+}
+
 /* ── FOOTER ── */
 footer { text-align:center; padding:3rem 2rem; font-style:italic; font-size:1rem; color:var(--warm); letter-spacing:0.12em; border-top:1px solid rgba(221,185,106,0.15); }
 footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:var(--gold); }
@@ -1251,6 +1351,26 @@ vivirlos intensamente... y dejarnos llevar.<br>
   </div>
 </div>
 
+
+
+<!-- ESTADO FINAL (cuenta atrás terminada) -->
+<div class="ended-overlay" id="endedOverlay">
+  <div class="ended-content">
+    <p class="ended-eyebrow">El momento por fin ha llegado</p>
+    <h2 class="ended-title">Ya ha empezado<br><span>Luxemburgo 2.0</span></h2>
+    <p class="ended-text">
+      Lamentablemente para poder volver hay que irse<br>
+      y este es mi vuelo de vuelta.
+    </p>
+    <div class="ended-flight-box">
+      <div class="ended-flight-label">Domingo, 26 de abril · Luxair · LG3837</div>
+      <div class="ended-flight-route"><strong>Luxemburgo</strong> 17:10 h &nbsp;✈&nbsp; <strong>Madrid</strong> 19:30 h</div>
+      <div class="ended-question">¿...VOLVERÉ...?</div>
+    </div>
+  </div>
+</div>
+
+
 <!-- FOOTER -->
 <footer>
   <span class="hearts">🥂 · 🦁 · 🥂</span>
@@ -1264,7 +1384,12 @@ function pad(n){ return String(n).padStart(2,'0'); }
 
 const momentOverlay = document.getElementById('momentOverlay');
 const threeDaysOverlay = document.getElementById('threeDaysOverlay');
+const endedOverlay = document.getElementById('endedOverlay');
+const arrivedMsg = document.getElementById('arrived-msg');
 let momentActive = false;
+let threeDaysActive = false;
+let endedActive = false;
+let momentParticlesStarted = false;
 
 const softBlock = document.getElementById('momentSoftBlock');
 
@@ -1283,15 +1408,16 @@ function applySoftMessageState() {
 }
 applySoftMessageState();
 
-
-let threeDaysActive = false;
-
 function activateThreeDays() {
-  if (threeDaysActive) return;
+  if (threeDaysActive || momentActive || endedActive) return;
   threeDaysActive = true;
   if (threeDaysOverlay) threeDaysOverlay.classList.add('active');
 }
 
+function deactivateThreeDays() {
+  threeDaysActive = false;
+  if (threeDaysOverlay) threeDaysOverlay.classList.remove('active');
+}
 
 function updatePulseSpeed(diffMs){
   const el = document.querySelector('.three-days-title');
@@ -1299,7 +1425,7 @@ function updatePulseSpeed(diffMs){
   const max = 72*3600000;
   const bounded = Math.max(0, Math.min(max, diffMs));
   const progress = 1 - (bounded/max);
-  const duration = 3.2 - (progress * 1.2); // from 3.2s to ~2s
+  const duration = 3.2 - (progress * 1.2);
   el.style.animationDuration = `1s, ${duration.toFixed(2)}s`;
 }
 
@@ -1312,20 +1438,21 @@ function updateThreeDaysCountdown(days, hours, minutes) {
   if (tm) tm.textContent = pad(minutes);
 }
 
-
 function activateMoment() {
-  if (momentActive) return;
+  if (momentActive || endedActive) return;
   momentActive = true;
-  if (threeDaysOverlay) threeDaysOverlay.classList.remove('active');
-  momentOverlay.classList.add('active');
+  deactivateThreeDays();
+  if (momentOverlay) momentOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
   launchMomentParticles();
 }
 
 function launchMomentParticles() {
+  if (momentParticlesStarted) return;
+  momentParticlesStarted = true;
   const symbols = ['💋','🥂','✦','❤️','💋','🥂','💋','✈️','💋'];
   const container = document.getElementById('momentParticles');
-  // continuous stream
+  if (!container) return;
   setInterval(() => {
     for (let i = 0; i < 3; i++) {
       const p = document.createElement('div');
@@ -1341,47 +1468,75 @@ function launchMomentParticles() {
   }, 300);
 }
 
+function activateEndedState() {
+  if (endedActive) return;
+  endedActive = true;
+  deactivateThreeDays();
+  if (momentOverlay) momentOverlay.classList.remove('active');
+  if (endedOverlay) endedOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
 function tick(){
   const diff = target - new Date();
   const totalHours = diff / 3600000;
 
-  // Trigger special mode under 12 hours
-  if (totalHours <= 12 && diff > 0) {
-    activateMoment();
-  }
-
   if(diff <= 0){
-    ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00');
-    document.getElementById('arrived-msg').textContent = '¡El momento ha llegado! 🥂';
-    // update mini countdown too
-    ['mHours','mMinutes','mSeconds'].forEach(id => document.getElementById(id).textContent='00');
+    ['days','hours','minutes','seconds'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '00';
+    });
+    updateThreeDaysCountdown(0, 0, 0);
+    const mh = document.getElementById('mHours');
+    const mm = document.getElementById('mMinutes');
+    if(mh) mh.textContent = '00';
+    if(mm) mm.textContent = '00';
+    if (arrivedMsg) arrivedMsg.textContent = 'Ya ha empezado el viaje. ✨';
+    activateEndedState();
     return;
   }
 
-  const days=Math.floor(diff/86400000), hours=Math.floor((diff%86400000)/3600000),
-        minutes=Math.floor((diff%3600000)/60000), seconds=Math.floor((diff%60000)/1000);
+  if (totalHours <= 24) {
+    activateMoment();
+  } else if (diff <= 72 * 3600000) {
+    activateThreeDays();
+  }
+
+  const days = Math.floor(diff/86400000);
+  const hours = Math.floor((diff%86400000)/3600000);
+  const minutes = Math.floor((diff%3600000)/60000);
+  const seconds = Math.floor((diff%60000)/1000);
 
   updateThreeDaysCountdown(days, hours, minutes);
   updatePulseSpeed(diff);
 
   function update(id,val){
-    const el=document.getElementById(id), v=pad(val);
-    if(el && el.textContent!==v){ el.textContent=v; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+    const el = document.getElementById(id);
+    const v = pad(val);
+    if(el && el.textContent !== v){
+      el.textContent = v;
+      el.classList.remove('tick');
+      void el.offsetWidth;
+      el.classList.add('tick');
+    }
   }
-  update('days',days); update('hours',hours); update('minutes',minutes); update('seconds',seconds);
 
-  // Update mini countdown in moment overlay
+  update('days',days);
+  update('hours',hours);
+  update('minutes',minutes);
+  update('seconds',seconds);
+
   if (momentActive) {
     const mh = document.getElementById('mHours');
     const mm = document.getElementById('mMinutes');
-    const ms = document.getElementById('mSeconds');
     const remainH = Math.floor(diff / 3600000);
     if(mh) mh.textContent = pad(remainH);
     if(mm) mm.textContent = pad(minutes);
-    if(ms) ms.textContent = pad(seconds);
   }
 }
-tick(); setInterval(tick,1000);
+
+tick();
+setInterval(tick,1000);
 
 // MAP PIN DATA — 4 locations, 4 photos
 const pinData = [
