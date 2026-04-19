@@ -998,6 +998,28 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
   50% { transform: scale(1.02); text-shadow: 0 0 28px rgba(221,185,106,0.25); }
 }
 
+
+.ended-video-wrap {
+  width: min(90%, 520px);
+  margin: 0 auto 2rem;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+}
+
+.ended-video-wrap video {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  filter: sepia(5%) contrast(1.05) brightness(0.98);
+  animation: cinematicZoom 10s ease-in-out infinite alternate;
+}
+
+@keyframes cinematicZoom {
+  from { transform: scale(1.03); }
+  to   { transform: scale(1.12); }
+}
+
 </style>
 </head>
 <body>
@@ -1325,7 +1347,7 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
       <span class="moment-div-line"></span>
     </div>
     <p class="moment-msg">
-...Sabes que...???
+La espera ha sido larga... pero va a merecer la pena cada segundo.
 </p>
 
 <p class="moment-msg2">
@@ -1356,8 +1378,8 @@ vivirlos intensamente... y dejarnos llevar.<br>
 <!-- ESTADO FINAL (cuenta atrás terminada) -->
 <div class="ended-overlay" id="endedOverlay">
   <div class="ended-content">
-    <p class="ended-eyebrow">La cuenta atras ha termindado</p>
-    <h2 class="ended-title">Nuestro monento<br><span>ha llegado</span></h2>
+    <p class="ended-eyebrow">El momento por fin ha llegado</p>
+    <h2 class="ended-title">Ya ha empezado<br><span>Luxemburgo 2.0</span></h2>
     <p class="ended-text">
       Lamentablemente para poder volver hay que irse<br>
       y este es mi vuelo de vuelta.
