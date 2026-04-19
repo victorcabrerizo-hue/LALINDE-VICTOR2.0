@@ -709,13 +709,218 @@ footer .hearts { font-size:1.3rem; display:block; margin-bottom:0.7rem; color:va
 
 .moment-photo-wrap img {
   width: min(100%, 540px);
-  transform: scale(var(--kiss-scale, 1.06));
+  transform: scale(1.08);
   filter: sepia(5%) contrast(1.08) brightness(1.02);
-  transition: transform 0.7s ease-out, filter 0.7s ease-out;
+  animation: kissCinematicZoom 8s ease-in-out infinite alternate;
   transform-origin: center center;
   will-change: transform;
 }
-to   { transform: scale(1.11); }
+
+@keyframes kissCinematicZoom {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.11); }
+}
+
+
+/* ── MODO ESPECIAL (< 3 días) ── */
+.three-days-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 1800;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(221,185,106,0.10), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(192,96,96,0.10), transparent 26%),
+    linear-gradient(135deg, #120905 0%, #1a1008 45%, #0d0906 100%);
+  overflow: hidden;
+}
+.three-days-overlay.active {
+  display: block;
+  animation: threeDaysIn 1.2s ease forwards;
+}
+@keyframes threeDaysIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.three-days-content {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+.three-days-copy {
+  max-width: 640px;
+  padding: 2rem 1.5rem;
+}
+.three-days-header {
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.12s;
+}
+.three-days-kicker {
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.three-days-main-title {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  line-height: 1.08;
+  color: var(--cream);
+}
+.three-days-date {
+  margin-top: 0.7rem;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  letter-spacing: 0.12em;
+  color: var(--warm);
+}
+.three-days-eyebrow {
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.32em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.15s;
+}
+.three-days-title {
+  font-family: 'Italiana', serif;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 1.0;
+  color: var(--cream);
+  margin-bottom: 1.3rem;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.35s;
+}
+.three-days-title span {
+  display: block;
+  color: var(--gold);
+  font-style: italic;
+}
+.three-days-text {
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+  line-height: 1.65;
+  color: rgba(250,246,238,0.88);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.6s;
+}
+.three-days-sub {
+  margin-top: 1.3rem;
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+  color: #e7c9a0;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.9s;
+}
+.three-days-mini {
+  margin-top: 1.8rem;
+  display: inline-flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 1.15s;
+}
+.three-days-mini .mini-unit {
+  display:flex; flex-direction:column; align-items:center;
+}
+.three-days-mini .mini-num {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  color: var(--cream);
+  text-shadow: 0 0 24px rgba(221,185,106,0.22);
+}
+.three-days-mini .mini-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.three-days-mini .mini-sep {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--gold);
+  opacity: 0.38;
+  line-height: 1;
+}
+.floating-memories {
+  position: absolute; inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.memory-card {
+  position: absolute;
+  width: clamp(120px, 18vw, 210px);
+  aspect-ratio: 0.82;
+  padding: 10px 10px 22px;
+  background: rgba(250,246,238,0.96);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.40);
+  border-radius: 3px;
+  transform-origin: center;
+  animation: memoryFloat 12s ease-in-out infinite alternate;
+}
+.memory-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.memory-card::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(26,16,8,0.08);
+  pointer-events: none;
+}
+.memory-card.card-1 { left: 7%;  top: 11%; transform: rotate(-9deg);  animation-delay: 0s; }
+.memory-card.card-2 { right: 9%; top: 14%; transform: rotate(7deg);   animation-delay: 1.2s; }
+.memory-card.card-3 { left: 11%; bottom: 9%; transform: rotate(8deg);  animation-delay: 2.2s; }
+.memory-card.card-4 { right: 11%; bottom: 11%; transform: rotate(-7deg); animation-delay: 3s; }
+@keyframes memoryFloat {
+  0%   { transform: translateY(0px) rotate(var(--r, 0deg)) scale(1); }
+  100% { transform: translateY(-12px) rotate(calc(var(--r, 0deg) + 1deg)) scale(1.03); }
+}
+.card-1 { --r: -9deg; }
+.card-2 { --r: 7deg; }
+.card-3 { --r: 8deg; }
+.card-4 { --r: -7deg; }
+@media (max-width: 680px) {
+  .memory-card {
+    width: 30vw;
+    max-width: 160px;
+    min-width: 110px;
+    opacity: 0.85;
+  }
+  .memory-card.card-1 { left: 3%; top: 14%; }
+  .memory-card.card-2 { right: 3%; top: 16%; }
+  .memory-card.card-3 { left: 2%; bottom: 14%; }
+  .memory-card.card-4 { right: 2%; bottom: 16%; }
+}
+
+
+/* Parallax suave en recuerdos flotantes */
+.memory-card {
+  transition: transform 0.18s ease-out;
+  will-change: transform;
+}
+
+
+/* Pulso suave en el título <3 días */
+.three-days-title {
+  animation: fadeUp 1s ease forwards 0.35s, subtlePulse 3.2s ease-in-out 1.2s infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); text-shadow: 0 0 0 rgba(221,185,106,0); }
+  50% { transform: scale(1.02); text-shadow: 0 0 28px rgba(221,185,106,0.25); }
 }
 
 </style>
@@ -1004,6 +1209,40 @@ to   { transform: scale(1.11); }
   </div>
 </section>
 
+
+<!-- MOMENTO VISUAL (< 3 días) -->
+<div class="three-days-overlay" id="threeDaysOverlay">
+  <div class="floating-memories">
+    <div class="memory-card card-1"><img src="IMG_3672.jpg" alt="Recuerdo 1"></div>
+    <div class="memory-card card-2"><img src="IMG_3682.jpg" alt="Recuerdo 2"></div>
+    <div class="memory-card card-3"><img src="IMG_3696.jpg" alt="Recuerdo 3"></div>
+    <div class="memory-card card-4"><img src="IMG_3721.jpg" alt="Recuerdo 4"></div>
+  </div>
+
+  <div class="three-days-content">
+    <div class="three-days-copy">
+      <div class="three-days-header">
+        <p class="three-days-kicker">Una historia por escribir... a fuego lento</p>
+        <div class="three-days-main-title">Cristina &amp; Víctor<br>Luxemburgo 2.0</div>
+        <p class="three-days-date">22 -26 de abril de 2026</p>
+      </div>
+      <h2 class="three-days-title">Ya queda<br><span>muy poco</span></h2>
+      <p class="three-days-text">
+        Muchas ganas.<br>
+        Muchas expectativas
+      </p>
+      <div class="three-days-mini">
+        <div class="mini-unit"><span class="mini-num" id="tDays">02</span><span class="mini-label">días</span></div>
+        <div class="mini-sep">:</div>
+        <div class="mini-unit"><span class="mini-num" id="tHours">11</span><span class="mini-label">horas</span></div>
+        <div class="mini-sep">:</div>
+        <div class="mini-unit"><span class="mini-num" id="tMinutes">05</span><span class="mini-label">min</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- MOMENTO ESPECIAL OVERLAY (< 12h) -->
 <div class="moment-overlay" id="momentOverlay">
   <div class="moment-particles" id="momentParticles"></div>
@@ -1035,8 +1274,6 @@ vivirlos intensamente... y dejarnos llevar.<br>
       <div class="moment-unit"><span id="mHours">--</span><small>horas</small></div>
       <div class="moment-sep">:</div>
       <div class="moment-unit"><span id="mMinutes">--</span><small>minutos</small></div>
-      <div class="moment-sep">:</div>
-      <div class="moment-unit"><span id="mSeconds">--</span><small>segundos</small></div>
     </div>
     <div class="moment-photo-wrap">
       <img src="kiss.gif" alt="El beso">
@@ -1056,37 +1293,10 @@ const target = new Date('2026-04-22T22:45:00');
 function pad(n){ return String(n).padStart(2,'0'); }
 
 const momentOverlay = document.getElementById('momentOverlay');
+const threeDaysOverlay = document.getElementById('threeDaysOverlay');
 let momentActive = false;
 
 const softBlock = document.getElementById('momentSoftBlock');
-
-const kissGif = document.querySelector('.moment-photo-wrap img');
-
-function updateKissScale(diffMs) {
-  if (!kissGif) return;
-
-  // Base intensity from remaining time inside the last 12h window
-  const windowMs = 12 * 3600000;
-  const bounded = Math.max(0, Math.min(windowMs, diffMs));
-  const progress = 1 - (bounded / windowMs); // 0 -> far, 1 -> near
-  const baseScale = 1.04 + (progress * 0.10); // 1.04 to 1.14
-  kissGif.style.setProperty('--kiss-scale', baseScale.toFixed(3));
-}
-
-window.addEventListener('scroll', () => {
-  if (!kissGif || !momentActive) return;
-  const extra = Math.min(window.scrollY / 4000, 0.02);
-  const current = parseFloat(getComputedStyle(kissGif).getPropertyValue('--kiss-scale')) || 1.06;
-  kissGif.style.setProperty('--kiss-scale', Math.min(current + extra, 1.16).toFixed(3));
-}, { passive: true });
-
-if (kissGif) {
-  kissGif.addEventListener('mouseenter', () => {
-    const current = parseFloat(getComputedStyle(kissGif).getPropertyValue('--kiss-scale')) || 1.06;
-    kissGif.style.setProperty('--kiss-scale', Math.min(current + 0.015, 1.17).toFixed(3));
-  });
-}
-
 
 function unlockSoftMessage() {
   try { localStorage.setItem('luxSoftUnlocked', '1'); } catch(e) {}
@@ -1104,9 +1314,41 @@ function applySoftMessageState() {
 applySoftMessageState();
 
 
+let threeDaysActive = false;
+
+function activateThreeDays() {
+  if (threeDaysActive || momentActive) return;
+  threeDaysActive = true;
+  if (threeDaysOverlay) threeDaysOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+
+function updatePulseSpeed(diffMs){
+  const el = document.querySelector('.three-days-title');
+  if(!el) return;
+  const max = 72*3600000;
+  const bounded = Math.max(0, Math.min(max, diffMs));
+  const progress = 1 - (bounded/max);
+  const duration = 3.2 - (progress * 1.2); // from 3.2s to ~2s
+  el.style.animationDuration = `1s, ${duration.toFixed(2)}s`;
+}
+
+function updateThreeDaysCountdown(days, hours, minutes) {
+  const td = document.getElementById('tDays');
+  const th = document.getElementById('tHours');
+  const tm = document.getElementById('tMinutes');
+  if (td) td.textContent = pad(days);
+  if (th) th.textContent = pad(hours);
+  if (tm) tm.textContent = pad(minutes);
+}
+
+
 function activateMoment() {
   if (momentActive) return;
   momentActive = true;
+  threeDaysActive = false;
+  if (threeDaysOverlay) threeDaysOverlay.classList.remove('active');
   momentOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
   launchMomentParticles();
@@ -1135,23 +1377,29 @@ function tick(){
   const diff = target - new Date();
   const totalHours = diff / 3600000;
 
-  // Trigger special mode under 12 hours
+  // Trigger special mode under 3 days
+  if (totalHours <= 72 && totalHours > 12 && diff > 0) {
+    activateThreeDays();
+  }
+
+  // Trigger final mode under 12 hours
   if (totalHours <= 12 && diff > 0) {
     activateMoment();
   }
-
-  updateKissScale(diff);
 
   if(diff <= 0){
     ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00');
     document.getElementById('arrived-msg').textContent = '¡El momento ha llegado! 🥂';
     // update mini countdown too
-    ['mHours','mMinutes','mSeconds'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent='00'; });
+    ['mHours','mMinutes','mSeconds'].forEach(id => document.getElementById(id).textContent='00');
     return;
   }
 
   const days=Math.floor(diff/86400000), hours=Math.floor((diff%86400000)/3600000),
         minutes=Math.floor((diff%3600000)/60000), seconds=Math.floor((diff%60000)/1000);
+
+  updateThreeDaysCountdown(days, hours, minutes);
+  updatePulseSpeed(diff);
 
   function update(id,val){
     const el=document.getElementById(id), v=pad(val);
@@ -1269,6 +1517,39 @@ function closeKiss(){
 }
 kissClose.addEventListener('click', closeKiss);
 kissOverlay.addEventListener('click', e => { if(e.target===kissOverlay) closeKiss(); });
+
+
+function initThreeDaysParallax() {
+  const cards = Array.from(document.querySelectorAll('.memory-card'));
+  if (!cards.length) return;
+
+  function setCardTransform(card, tx, ty) {
+    const rot = (getComputedStyle(card).getPropertyValue('--r') || '0deg').trim();
+    card.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot})`;
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    if (!threeDaysActive) return;
+    cards.forEach((card, i) => {
+      const factor = (i + 1) * 3;
+      const tx = ((e.clientX - window.innerWidth / 2) / (window.innerWidth / 2)) * factor;
+      const ty = ((e.clientY - window.innerHeight / 2) / (window.innerHeight / 2)) * factor;
+      setCardTransform(card, tx, ty);
+    });
+  });
+
+  window.addEventListener('deviceorientation', (e) => {
+    if (!threeDaysActive) return;
+    const gx = Math.max(-10, Math.min(10, e.gamma || 0));
+    const gy = Math.max(-10, Math.min(10, e.beta || 0));
+    cards.forEach((card, i) => {
+      const factor = (i + 1) * 0.8;
+      setCardTransform(card, gx * factor, gy * factor);
+    });
+  });
+}
+initThreeDaysParallax();
+
 
 // FLOATING PARTICLES
 const symbols=['🥂','✦','·','✿','🥂'];
