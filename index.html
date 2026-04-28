@@ -427,6 +427,40 @@ h1 {
   }
 }
 </style>
+
+<style>
+.countdown {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+</style>
+
+
+<style>
+.soria-skyline-bottom{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(92px, 15vw, 165px);
+  background-image: inherit;
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto clamp(70px, 10vw, 105px);
+  opacity: 0.42;
+  filter: sepia(1) saturate(0.55) brightness(0.48);
+  pointer-events: none;
+  z-index: 1;
+}
+.soria-skyline-bottom::before{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  bottom: clamp(54px, 8vw, 82px);
+  height: 115px;
+  background: linear-gradient(to top, rgba(243,226,206,0), rgba(243,226,206,0.98));
+}
+</style>
+
 </head>
 
 <body>
@@ -460,21 +494,14 @@ h1 {
   <div class="date-ribbon">♡ Seremos de nuevo <span class="mark">vecinos... hasta el martes 5 de mayo♥</div>
 
   <section class="message">
-Será ya la <span class="gold">4ª</span> vez que nos encontramos en nuestra <span class="mark">ciudad</span>,<br>
-
-aquí todo es más <span class="script">contenido</span>, casi <span class="script">secreto</span>...<br>
-
-y sabemos que será más difícil dar rienda suelta a la <span class="script">imaginación</span><br>
-
-pero aun así, volver a <span class="gold">verte</span> siempre es un <span class="gold">regalo</span><br>
-
-ojalá encontremos ese <span class="script">tiempo</span> solo nuestro para <span class="mark">vernos</span><br>
-
-para sentirnos, para perdernos <span class="script">juntos</span> y seguir creando momentos <span class="gold">especiales ♡<br>
-
-<span class="mark">te quiero</span> en mi vida, <span class="mark">te necesito</span> cerca<br>
-
-y deseo <span class="script underline">besarte</span> cada minuto que pase <span class="gold">contigo</span>.
+    Será ya la <span class="gold">4ª</span> vez que nos encontramos en nuestra <span class="mark">ciudad</span>,<br>
+    aquí todo es más <span class="script">contenido</span>, casi <span class="script">secreto</span>...<br>
+    y sabemos que será más difícil dar rienda suelta a la <span class="script">imaginación</span><br>
+    pero aun así, volver a <span class="gold">verte</span> siempre es un <span class="gold">regalo</span><br>
+    ojalá encontremos ese <span class="script">tiempo</span> solo nuestro para <span class="mark">vernos</span><br>
+    para sentirnos, para perdernos <span class="script">juntos</span> y seguir creando momentos especiales ♡<br>
+    <span class="mark">te quiero</span> en mi vida, <span class="mark">te necesito</span> cerca<br>
+    y deseo <span class="script underline">besarte</span> cada minuto que pase <span class="gold">contigo</span>.
   </section>
 
   <div class="mid-heart">♡</div>
@@ -490,29 +517,36 @@ y deseo <span class="script underline">besarte</span> cada minuto que pase <span
 </main>
 
 <script>
-const target = new Date("2026-04-29T23:30:00").getTime();
+(function () {
+  // Fecha objetivo: 29/04/2026 23:30.
+  // Formato compatible con Safari/iPhone: new Date(año, mesIndex, día, hora, minuto).
+  const target = new Date(2026, 3, 29, 23, 30, 0).getTime();
 
-function pad(value) {
-  return String(value).padStart(2, "0");
-}
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
 
-function updateCountdown() {
-  const now = Date.now();
-  const diff = Math.max(0, target - now);
+  function pad(value) {
+    return String(value).padStart(2, "0");
+  }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  function updateCountdown() {
+    const diff = Math.max(0, target - Date.now());
 
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = pad(hours);
-  document.getElementById("minutes").textContent = pad(minutes);
-}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap" rel="stylesheet">
-updateCountdown();
-setInterval(updateCountdown, 30000);
+    const totalMinutes = Math.floor(diff / 60000);
+    const days = Math.floor(totalMinutes / 1440);
+    const hours = Math.floor((totalMinutes % 1440) / 60);
+    const minutes = totalMinutes % 60;
+
+    if (daysEl) daysEl.textContent = String(days);
+    if (hoursEl) hoursEl.textContent = pad(hours);
+    if (minutesEl) minutesEl.textContent = pad(minutes);
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
 </script>
+<div class="soria-skyline soria-skyline-bottom" aria-hidden="true"></div>
 </body>
 </html>
