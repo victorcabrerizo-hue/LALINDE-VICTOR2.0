@@ -1,476 +1,454 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cristina vuelve a Soria</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Italiana&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cristina vuelve a Soria</title>
 
-    :root {
-      --cream: #fff3df;
-      --rose: #ef747a;
-      --rose-soft: #ff9aa0;
-      --gold: #e7c076;
-      --shadow: rgba(0, 0, 0, 0.65);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
 
-    body {
-      min-height: 100vh;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      color: var(--cream);
-      background:
-        radial-gradient(circle at 50% 8%, rgba(255,178,126,0.34), transparent 23%),
-        radial-gradient(circle at 20% 28%, rgba(239,116,122,0.15), transparent 34%),
-        linear-gradient(180deg, #2b1728 0%, #41181b 30%, #180b0b 70%, #070303 100%);
-      overflow-x: hidden;
-    }
+<style>
+:root {
+  --ink: #241c18;
+  --soft-ink: #5f5148;
+  --cream: #fbf4ea;
+  --sand: #ead8c2;
+  --clay: #b66b54;
+  --wine: #7f3b46;
+  --rose: #d48782;
+  --gold: #c79d5d;
+  --shadow: rgba(36, 28, 24, 0.24);
+}
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.18) 54%, rgba(0,0,0,0.64) 100%);
-      z-index: 2;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .page {
-      position: relative;
-      z-index: 3;
-      min-height: 100vh;
-      overflow: hidden;
-      padding-bottom: 3rem;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: "Montserrat", sans-serif;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(212,135,130,0.28), transparent 32%),
+    radial-gradient(circle at 84% 12%, rgba(199,157,93,0.20), transparent 30%),
+    linear-gradient(180deg, #fff8ef 0%, #f1e2cf 46%, #dac2a8 100%);
+  overflow-x: hidden;
+}
 
-    .sky-glow {
-      position: absolute;
-      inset: 0;
-      min-height: 620px;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 52% 20%, rgba(255,207,158,0.32), transparent 15%),
-        radial-gradient(circle at 48% 30%, rgba(239,116,122,0.20), transparent 24%);
-    }
+/* Soria skyline background */
+.skyline-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 210px;
+  background: url("image.png") bottom center / contain repeat-x;
+  opacity: 0.14;
+  filter: sepia(1) contrast(1.3);
+  pointer-events: none;
+  z-index: 0;
+}
 
-    .silhouette-band {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(100%, 1180px);
-      height: 145px;
-      background-image: url('image.png');
-      background-repeat: repeat-x;
-      background-position: center bottom;
-      background-size: auto 86px;
-      opacity: 0.94;
-      filter: drop-shadow(0 18px 28px rgba(0,0,0,0.78));
-      pointer-events: none;
-    }
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 54px 22px 70px;
+}
 
-    .silhouette-top { top: 116px; }
-    .silhouette-bottom {
-      bottom: 0;
-      opacity: 0.42;
-      transform: translateX(-50%) scaleY(-1);
-      filter: blur(0.2px) drop-shadow(0 -14px 24px rgba(0,0,0,0.85));
-    }
+.hero {
+  text-align: center;
+  padding: 22px 10px 18px;
+}
 
-    .hero {
-      position: relative;
-      max-width: 990px;
-      margin: 0 auto;
-      padding: clamp(3rem, 8vw, 5.5rem) 1.2rem 1.8rem;
-      text-align: center;
-    }
+.kicker {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--wine);
+  margin-bottom: 8px;
+}
 
-    .eyebrow {
-      font-size: clamp(0.95rem, 2.2vw, 1.22rem);
-      letter-spacing: 0.33em;
-      text-transform: uppercase;
-      color: rgba(255,243,223,0.78);
-      text-shadow: 0 2px 16px var(--shadow);
-      animation: fadeUp 1.1s ease both;
-    }
+h1 {
+  margin: 0;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(4.2rem, 12vw, 8rem);
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--wine);
+  text-shadow: 0 12px 28px rgba(127,59,70,0.14);
+}
 
-    h1 {
-      margin-top: 0.55rem;
-      font-family: 'Great Vibes', cursive;
-      font-weight: 400;
-      font-size: clamp(4.9rem, 18vw, 11rem);
-      line-height: 0.82;
-      color: #ffe6d9;
-      text-shadow: 0 0 28px rgba(255,165,150,0.25), 0 8px 28px rgba(0,0,0,0.6);
-      animation: fadeUp 1.2s ease both 0.12s;
-    }
+h1 span {
+  display: block;
+  margin-top: 0.05em;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  color: var(--ink);
+}
 
-    .title-sub {
-      font-family: 'Italiana', serif;
-      font-size: clamp(2.1rem, 7vw, 4.1rem);
-      line-height: 1;
-      margin-top: -0.25rem;
-      color: var(--cream);
-      text-shadow: 0 4px 22px rgba(0,0,0,0.68);
-      animation: fadeUp 1.2s ease both 0.2s;
-    }
+.soria {
+  color: var(--clay);
+  font-weight: 500;
+}
 
-    .title-sub span { color: var(--rose); font-style: italic; }
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 30px auto 26px;
+  max-width: 580px;
+}
 
-    .ornament {
-      margin: 1.15rem auto 2.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      width: min(640px, 82vw);
-      color: var(--rose-soft);
-      animation: fadeUp 1.1s ease both 0.32s;
-    }
+.line::before,
+.line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(127,59,70,0.34));
+}
 
-    .ornament::before, .ornament::after {
-      content: '';
-      height: 1px;
-      flex: 1;
-      background: linear-gradient(90deg, transparent, rgba(255,214,189,0.46));
-    }
-    .ornament::after { background: linear-gradient(90deg, rgba(255,214,189,0.46), transparent); }
+.line::after {
+  background: linear-gradient(90deg, rgba(127,59,70,0.34), transparent);
+}
 
-    .heart {
-      font-size: 1.5rem;
-      text-shadow: 0 0 18px rgba(239,116,122,0.65);
-      animation: heartBeat 2.4s ease-in-out infinite;
-    }
+.heart {
+  color: var(--clay);
+  font-size: 1.15rem;
+}
 
-    .countdown-label {
-      font-family: 'Italiana', serif;
-      letter-spacing: 0.18em;
-      font-size: clamp(1.05rem, 2.6vw, 1.3rem);
-      text-transform: uppercase;
-      color: rgba(255,243,223,0.84);
-      margin-bottom: 1rem;
-      animation: fadeUp 1.1s ease both 0.44s;
-    }
+/* countdown */
+.countdown-label {
+  font-family: "Cinzel", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--soft-ink);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
 
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(64px, 1fr));
-      gap: clamp(0.55rem, 2.2vw, 1.25rem);
-      width: min(760px, 94vw);
-      margin: 0 auto;
-      animation: fadeUp 1.1s ease both 0.55s;
-    }
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(86px, 1fr));
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-    .unit {
-      position: relative;
-      padding: 1rem 0.35rem 0.75rem;
-      border-left: 1px solid rgba(255,225,193,0.18);
-      border-right: 1px solid rgba(255,225,193,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02));
-      border-radius: 10px;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.25);
-      backdrop-filter: blur(2px);
-    }
+.time-box {
+  position: relative;
+  padding: 22px 12px 18px;
+  border-radius: 18px;
+  background: rgba(255, 252, 247, 0.64);
+  border: 1px solid rgba(127, 59, 70, 0.10);
+  box-shadow: 0 18px 46px rgba(80, 52, 35, 0.12);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
 
-    .unit:not(:last-child)::after {
-      content: '♥';
-      position: absolute;
-      right: calc(-0.75rem - 3px);
-      top: 43%;
-      transform: translateY(-50%);
-      color: var(--rose);
-      font-size: clamp(0.85rem, 2vw, 1.05rem);
-      text-shadow: 0 0 12px rgba(239,116,122,0.62);
-    }
+.time-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.42), transparent 55%);
+  pointer-events: none;
+}
 
-    .num {
-      font-family: 'Italiana', serif;
-      font-size: clamp(2.8rem, 9vw, 5.2rem);
-      line-height: 1;
-      color: #ffe7ca;
-      text-shadow: 0 0 22px rgba(231,192,118,0.25), 0 5px 18px rgba(0,0,0,0.56);
-      transition: transform 0.25s ease, color 0.25s ease;
-    }
-    .num.tick { transform: scale(1.06); color: var(--gold); }
+.num {
+  position: relative;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 0.85;
+  font-weight: 500;
+  color: var(--ink);
+}
 
-    .label {
-      margin-top: 0.5rem;
-      font-size: clamp(0.72rem, 2vw, 0.92rem);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,221,196,0.9);
-      font-weight: 600;
-    }
+.unit {
+  position: relative;
+  margin-top: 12px;
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--wine);
+}
 
-    .date {
-      margin-top: 1.5rem;
-      font-size: clamp(1.1rem, 3vw, 1.35rem);
-      color: rgba(255,243,223,0.88);
-      text-shadow: 0 2px 16px var(--shadow);
-      animation: fadeUp 1.1s ease both 0.67s;
-    }
-    .date span { color: var(--rose); font-weight: 600; }
+.date {
+  margin: 24px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.28rem;
+  color: var(--soft-ink);
+}
 
-    .message {
-      max-width: 780px;
-      margin: 2.55rem auto 1.8rem;
-      padding: 0 1rem;
-      font-size: clamp(1.35rem, 3.5vw, 2rem);
-      line-height: 1.35;
-      color: #fff0d9;
-      text-shadow: 0 2px 18px rgba(0,0,0,0.76);
-      animation: fadeUp 1.1s ease both 0.8s;
-    }
-    .message span { color: var(--rose-soft); font-weight: 600; }
+.date strong {
+  color: var(--clay);
+  font-weight: 500;
+}
 
-    .photo-wrap {
-      position: relative;
-      width: min(880px, calc(100vw - 2rem));
-      margin: 2.3rem auto 1.4rem;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 26px 76px rgba(0,0,0,0.72), 0 0 0 1px rgba(231,192,118,0.20);
-      animation: fadeUp 1.1s ease both 0.98s;
-      background: rgba(0,0,0,0.18);
-    }
-    .photo-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      border: 1px solid rgba(255,221,196,0.18);
-      border-radius: 20px;
-      pointer-events: none;
-    }
-    .photo-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(10,4,4,0.03), transparent 58%, rgba(10,4,4,0.28)),
-        radial-gradient(circle at 50% 10%, transparent 54%, rgba(0,0,0,0.16));
-    }
-    .photo-wrap img {
-      width: 100%;
-      display: block;
-      filter: saturate(1.03) contrast(1.03) brightness(0.96);
-    }
+/* text card */
+.message-card {
+  position: relative;
+  margin: 56px auto 34px;
+  max-width: 760px;
+  padding: clamp(30px, 5vw, 50px);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255,252,247,0.76), rgba(255,248,239,0.54)),
+    rgba(255,255,255,0.42);
+  border: 1px solid rgba(127,59,70,0.10);
+  box-shadow: 0 24px 70px rgba(80, 52, 35, 0.16);
+}
 
-    .footer-love {
-      position: relative;
-      z-index: 4;
-      margin-top: 1.3rem;
-      text-align: center;
-      font-style: italic;
-      font-size: clamp(1.2rem, 3.2vw, 1.65rem);
-      color: #ffe9cf;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.72);
-      animation: fadeUp 1.1s ease both 1.12s;
-    }
-    .footer-love span { color: var(--rose-soft); padding: 0 0.75rem; }
+.message-card::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(199,157,93,0.24);
+  border-radius: 20px;
+  pointer-events: none;
+}
 
-    .bottom-ornament {
-      width: min(430px, 70vw);
-      margin: 1.1rem auto 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      color: var(--gold);
-      opacity: 0.78;
-    }
-    .bottom-ornament::before, .bottom-ornament::after {
-      content: '';
-      height: 1px;
-      flex: 1;
-      background: linear-gradient(90deg, transparent, rgba(231,192,118,0.6));
-    }
-    .bottom-ornament::after { background: linear-gradient(90deg, rgba(231,192,118,0.6), transparent); }
+.message {
+  position: relative;
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.45rem, 3.1vw, 2.05rem);
+  line-height: 1.45;
+  color: var(--ink);
+  text-align: center;
+}
 
-    .ended {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background:
-        radial-gradient(circle at center, rgba(239,116,122,0.24), transparent 32%),
-        linear-gradient(180deg, #2a1217, #080404);
-    }
-    .ended.active { display: flex; }
-    .ended h2 {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 400;
-      font-size: clamp(4rem, 14vw, 9rem);
-      color: #ffe4d8;
-      line-height: 0.9;
-    }
-    .ended p {
-      margin-top: 1rem;
-      font-size: clamp(1.35rem, 4vw, 2rem);
-      color: var(--cream);
-      font-style: italic;
-      max-width: 700px;
-    }
-    .ended .silhouette-band {
-      position: fixed;
-      bottom: 0;
-      top: auto;
-      opacity: 0.75;
-    }
+.message .script {
+  font-family: "Parisienne", cursive;
+  font-size: 1.45em;
+  color: var(--wine);
+  white-space: nowrap;
+}
 
-    .sparkle {
-      position: fixed;
-      top: -20px;
-      z-index: 0;
-      color: rgba(255,215,180,0.78);
-      pointer-events: none;
-      animation: fall linear forwards;
-      text-shadow: 0 0 10px rgba(239,116,122,0.45);
-    }
+.mark {
+  color: var(--clay);
+  font-weight: 600;
+}
 
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
-    @keyframes fall {
-      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.45; }
-      100% { transform: translateY(110vh) rotate(120deg); opacity: 0; }
-    }
+.soft {
+  color: var(--soft-ink);
+  font-style: italic;
+}
 
-    @media (max-width: 720px) {
-      .hero { padding-top: 2.3rem; }
-      .silhouette-top { top: 92px; }
-      .silhouette-band { background-size: auto 62px; height: 112px; }
-      h1 { font-size: clamp(4.4rem, 22vw, 7.5rem); }
-      .countdown { grid-template-columns: repeat(2, minmax(110px, 1fr)); width: min(420px, 94vw); }
-      .unit:not(:last-child)::after { display: none; }
-      .message { margin-top: 2rem; }
-      .photo-wrap { border-radius: 14px; }
-      .photo-wrap::before { border-radius: 14px; }
-    }
+.final-line {
+  display: block;
+  margin-top: 18px;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(2.2rem, 5vw, 3.7rem);
+  color: var(--wine);
+  line-height: 1;
+}
 
-    @media (max-width: 390px) {
-      .countdown { grid-template-columns: repeat(2, minmax(88px, 1fr)); }
-      .unit { padding-top: 0.8rem; }
-      .message { font-size: 1.22rem; }
-    }
-  </style>
+/* photo */
+.photo-section {
+  margin: 64px auto 22px;
+  max-width: 860px;
+  text-align: center;
+}
+
+.photo-title {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--wine);
+  margin-bottom: 18px;
+}
+
+.photo-frame {
+  position: relative;
+  display: inline-block;
+  width: min(100%, 820px);
+  padding: 13px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(199,157,93,0.75), rgba(127,59,70,0.34), rgba(255,255,255,0.72));
+  box-shadow:
+    0 36px 90px rgba(80, 52, 35, 0.34),
+    0 0 0 1px rgba(127,59,70,0.08);
+  transform: rotate(-0.7deg);
+}
+
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  border-radius: 40px;
+  background: radial-gradient(circle, rgba(212,135,130,0.22), transparent 68%);
+  z-index: -1;
+  animation: glow 4.5s ease-in-out infinite alternate;
+}
+
+.photo-frame::after {
+  content: "♥";
+  position: absolute;
+  top: -28px;
+  right: 40px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--wine);
+  color: var(--cream);
+  font-size: 1.5rem;
+  box-shadow: 0 14px 30px rgba(127,59,70,0.24);
+}
+
+.photo-frame img {
+  width: 100%;
+  display: block;
+  border-radius: 20px;
+  filter: contrast(1.04) saturate(1.06) brightness(0.98);
+}
+
+.photo-caption {
+  margin: 26px auto 0;
+  max-width: 640px;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--soft-ink);
+}
+
+.footer {
+  margin-top: 54px;
+  text-align: center;
+  font-family: "Parisienne", cursive;
+  font-size: 2.15rem;
+  color: var(--wine);
+}
+
+@keyframes glow {
+  from { opacity: 0.35; transform: scale(0.98); }
+  to { opacity: 0.8; transform: scale(1.02); }
+}
+
+@media (max-width: 640px) {
+  .page { padding-top: 38px; }
+  .countdown {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .message-card {
+    margin-top: 42px;
+  }
+  .skyline-bg {
+    height: 150px;
+    opacity: 0.16;
+  }
+  .photo-frame {
+    transform: none;
+    padding: 9px;
+    border-radius: 22px;
+  }
+  .photo-frame::after {
+    right: 20px;
+    top: -22px;
+  }
+}
+</style>
 </head>
+
 <body>
-  <main class="page" id="mainPage">
-    <div class="sky-glow"></div>
-    <div class="silhouette-band silhouette-top" aria-hidden="true"></div>
-    <div class="silhouette-band silhouette-bottom" aria-hidden="true"></div>
+<div class="skyline-bg"></div>
 
-    <section class="hero">
-      <p class="eyebrow">Cuenta atrás para que</p>
-      <h1>Cristina</h1>
-      <p class="title-sub">vuelva a <span>Soria</span></p>
+<main class="page">
+  <section class="hero">
+    <div class="kicker">Cuenta atrás para que</div>
+    <h1>Cristina <span>vuelva a <strong class="soria">Soria</strong></span></h1>
 
-      <div class="ornament"><span class="heart">♥</span></div>
+    <div class="line"><span class="heart">♥</span></div>
 
-      <p class="countdown-label">Falta</p>
-      <div class="countdown" aria-label="Cuenta atrás">
-        <div class="unit"><div class="num" id="days">--</div><div class="label">Días</div></div>
-        <div class="unit"><div class="num" id="hours">--</div><div class="label">Horas</div></div>
-        <div class="unit"><div class="num" id="minutes">--</div><div class="label">Minutos</div></div>
-        <div class="unit"><div class="num" id="seconds">--</div><div class="label">Segundos</div></div>
+    <div class="countdown-label">Falta</div>
+
+    <div class="countdown">
+      <div class="time-box">
+        <div class="num" id="days">--</div>
+        <div class="unit">Días</div>
       </div>
-
-      <p class="date">hasta el miércoles <span>29/04/2026 a las 23:30</span></p>
-
-      <div class="message">
-        Será ya la <span>4ª vez</span> que coincidimos en nuestra ciudad,<br>
-        aquí no podemos dar rienda suelta a nuestro amor<br>
-        pero el simple hecho de volver a <span>verte</span> ya es un premio<br>
-        ojalá podamos encontrar tiempo para <span>vernos</span><br>
-        para disfrutar <span>juntos</span> y seguir sumando momentos<br>
-        <span>te quiero</span> en mi vida, <span>te necesito</span> cerca<br>
-        y deseo <span>besarte</span> cada minuto que pase contigo.
+      <div class="time-box">
+        <div class="num" id="hours">--</div>
+        <div class="unit">Horas</div>
       </div>
-
-      <div class="photo-wrap">
-        <img src="IMG_260426.jpg" alt="Recuerdos juntos">
+      <div class="time-box">
+        <div class="num" id="minutes">--</div>
+        <div class="unit">Minutos</div>
       </div>
-
-      <p class="footer-love"><span>♡</span>Te espero con todo mi amor<span>♡</span></p>
-      <div class="bottom-ornament">♡</div>
-    </section>
-  </main>
-
-  <section class="ended" id="endedScreen">
-    <div class="silhouette-band" aria-hidden="true"></div>
-    <div>
-      <h2>Ya estás aquí</h2>
-      <p>Ahora la cuenta atrás termina… y empieza lo importante: volver a mirarte de cerca.</p>
+      <div class="time-box">
+        <div class="num" id="seconds">--</div>
+        <div class="unit">Segundos</div>
+      </div>
     </div>
+
+    <p class="date">hasta el <strong>miércoles 29/04/2026 a las 23:30</strong></p>
   </section>
 
-  <script>
-    const target = new Date('2026-04-29T23:30:00');
-    const ids = ['days', 'hours', 'minutes', 'seconds'];
-    const els = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
-    const endedScreen = document.getElementById('endedScreen');
-    const mainPage = document.getElementById('mainPage');
-    let previous = { days: null, hours: null, minutes: null, seconds: null };
+  <section class="message-card">
+    <p class="message">
+      Será ya la <span class="mark">4ª vez</span> que coincidimos en nuestra ciudad.<br><br>
+      Aquí no podemos dar rienda suelta a <span class="script">nuestro amor</span>,<br>
+      pero el simple hecho de volver a <span class="mark">verte</span> ya es un premio.<br><br>
+      Ojalá podamos encontrar tiempo para <span class="mark">vernos</span>,<br>
+      para disfrutar <span class="mark">juntos</span> y seguir sumando momentos.<br><br>
+      <span class="soft">Te quiero en mi vida, te necesito cerca,</span>
+      <span class="final-line">y deseo besarte cada minuto contigo.</span>
+    </p>
+  </section>
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+  <section class="photo-section">
+    <div class="photo-title">Nuestros momentos</div>
+    <div class="photo-frame">
+      <img src="IMG_260426.jpg" alt="Nuestros momentos juntos">
+    </div>
+    <p class="photo-caption">
+      Porque hay recuerdos que no se guardan solo en una foto: se quedan esperando al siguiente encuentro.
+    </p>
+  </section>
 
-    function setTick(el) {
-      el.classList.remove('tick');
-      void el.offsetWidth;
-      el.classList.add('tick');
-    }
+  <div class="footer">Te espero con todo mi amor</div>
+</main>
 
-    function updateCountdown() {
-      const now = new Date();
-      let diff = target - now;
+<script>
+const targetDate = new Date("2026-04-29T23:30:00").getTime();
 
-      if (diff <= 0) {
-        mainPage.style.display = 'none';
-        endedScreen.classList.add('active');
-        return;
-      }
+function pad(n) {
+  return String(n).padStart(2, "0");
+}
 
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+function updateCountdown() {
+  const now = new Date().getTime();
+  let distance = targetDate - now;
 
-      const values = { days, hours, minutes, seconds };
-      for (const id of ids) {
-        const value = id === 'days' ? String(values[id]) : pad(values[id]);
-        if (els[id].textContent !== value) {
-          els[id].textContent = value;
-          if (previous[id] !== null) setTick(els[id]);
-          previous[id] = values[id];
-        }
-      }
-    }
+  if (distance <= 0) {
+    document.getElementById("days").textContent = "00";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
+    return;
+  }
 
-    function makeSparkle() {
-      const el = document.createElement('span');
-      el.className = 'sparkle';
-      el.textContent = Math.random() > 0.65 ? '♥' : '✦';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.fontSize = (Math.random() * 9 + 8) + 'px';
-      el.style.animationDuration = (Math.random() * 5 + 7) + 's';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 13000);
-    }
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    setInterval(makeSparkle, 700);
-  </script>
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = pad(hours);
+  document.getElementById("minutes").textContent = pad(minutes);
+  document.getElementById("seconds").textContent = pad(seconds);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>
