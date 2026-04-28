@@ -356,6 +356,44 @@ h1 span {
   }
 }
 </style>
+
+<style>
+/* Soria silhouettes fixed background */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background-image: url("image.png");
+  background-repeat: repeat-x;
+  background-position: top center;
+  background-size: auto 105px;
+  opacity: 0.35;
+  filter: sepia(1) saturate(0.6) brightness(0.55);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 85px;
+  left: 0;
+  right: 0;
+  height: 125px;
+  background: linear-gradient(to bottom, rgba(243,226,206,0), rgba(243,226,206,0.95));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page, main, header, section {
+  position: relative;
+  z-index: 1;
+}
+</style>
+
 </head>
 
 <body>
