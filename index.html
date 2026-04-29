@@ -514,7 +514,7 @@ body.fun-mode .photo-frame {
 }
 
 body.fun-mode .photo-frame::after {
-  content: "Luxair emocional: llegada inminente ✈";
+  content: "Vuelo Luxair LG3837: llegada inminente ✈";
   font-family: "Montserrat", system-ui, sans-serif;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -678,8 +678,8 @@ body.fun-mode .date-ribbon {
   }
 
   function updateMood() {
-    // Cambio de tono: 29/04/2026 a las 16:40, hora local del dispositivo.
-    const funMoment = new Date(2026, 3, 29, 10, 40, 0).getTime();
+    // Cambio de tono: 29/04/2026 a las 16:30, hora local del dispositivo.
+    const funMoment = new Date(2026, 3, 29, 16, 30, 0).getTime();
     const isFunMode = Date.now() >= funMoment;
 
     document.body.classList.toggle("fun-mode", isFunMode);
@@ -697,11 +697,11 @@ body.fun-mode .date-ribbon {
       if (ribbon) ribbon.innerHTML = "✈ Tripulación preparada · Próxima parada: abrazos y risas";
       if (message) {
         message.innerHTML = `
-          A partir de las <span class="gold">16:40</span> esto deja de ser una cuenta atrás solemne<br>
+          A partir de las <span class="gold">17:10</span> esto deja de ser una cuenta atrás solemne<br>
           y pasa oficialmente a <span class="mark">operación aterrizaje en Soria</span>.<br>
           La piloto viene fuerte, la avioneta viene con ganas,<br>
-          y abajo hay alguien haciendo de torre de control con un cartel de <span class="script">“te espero”</span>.<br>
-          Queda poco, muy poco... y ahora toca reírnos un poco hasta que llegue el momento ♡
+          y al otro lado hay alguien con muchas ganas de<span class="script">reecontrarse</span>.<br>
+          Queda poco, muy poco... y ahora toca reírnos un poco hasta que llegue el momento <span class="gold">de besarte de nuevo</span> ♡
         `;
       }
     }
