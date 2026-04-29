@@ -461,6 +461,130 @@ h1 {
 }
 </style>
 
+
+<style>
+/* Cambio automático a las 16:40: menos romanticismo, más humor */
+body.fun-mode {
+  --wine: #8c4a2f;
+  --wine-dark: #603522;
+  --gold: #bf8330;
+  --rose: #e08a3c;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255,255,255,0.72), transparent 24%),
+    radial-gradient(circle at 18% 82%, rgba(224,138,60,0.22), transparent 28%),
+    radial-gradient(circle at 82% 82%, rgba(40,108,135,0.16), transparent 26%),
+    linear-gradient(180deg, #f8ebd7 0%, #efd2aa 58%, #dca96e 100%);
+}
+
+body.fun-mode h1 {
+  font-family: "Cinzel", serif;
+  font-size: clamp(2.6rem, 10vw, 5rem);
+  letter-spacing: 0.02em;
+}
+
+body.fun-mode .return {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: clamp(1.45rem, 5vw, 2.5rem);
+  font-weight: 500;
+}
+
+body.fun-mode .divider,
+body.fun-mode .mid-heart,
+body.fun-mode .footer-heart {
+  color: var(--gold);
+}
+
+body.fun-mode .time:not(:last-child)::after {
+  content: "✈";
+  transform: rotate(-12deg);
+}
+
+.fun-gallery {
+  display: none;
+}
+
+body.fun-mode .romantic-photo {
+  display: none;
+}
+
+body.fun-mode .photo-frame {
+  transform: rotate(0deg);
+  padding: clamp(10px, 2vw, 16px) clamp(10px, 2vw, 16px) clamp(58px, 8vw, 76px);
+  background: #fff7e9;
+}
+
+body.fun-mode .photo-frame::after {
+  content: "Luxair emocional: llegada inminente ✈";
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.05rem, 4.6vw, 1.7rem);
+  color: var(--wine-dark);
+}
+
+body.fun-mode .corner-heart::before {
+  content: "✈";
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 4.7rem;
+  color: rgba(140,74,47,0.72);
+}
+
+body.fun-mode .fun-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 3vw, 18px);
+  align-items: stretch;
+}
+
+.fun-card {
+  position: relative;
+  margin: 0;
+  padding: clamp(7px, 1.8vw, 11px) clamp(7px, 1.8vw, 11px) clamp(40px, 7vw, 54px);
+  background: #fffaf0;
+  border-radius: 9px;
+  box-shadow: 0 14px 30px rgba(80,50,35,0.18);
+}
+
+.fun-card-one { transform: rotate(-2.2deg); }
+.fun-card-two { transform: rotate(2deg); }
+
+.fun-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+  filter: contrast(1.04) saturate(1.08) brightness(0.99);
+}
+
+.fun-card figcaption {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 12px;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: clamp(0.72rem, 2.5vw, 0.95rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--wine-dark);
+}
+
+body.fun-mode .date-ribbon {
+  background: linear-gradient(90deg, transparent 0%, #285f78 8%, #e08a3c 50%, #285f78 92%, transparent 100%);
+}
+
+@media (max-width: 620px) {
+  body.fun-mode .fun-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .fun-card img {
+    aspect-ratio: 4 / 4.7;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -493,7 +617,7 @@ h1 {
 
   <div class="date-ribbon">♡ Seremos de nuevo <span class="mark">vecinos... hasta el martes 5 de mayo♥</div>
 
-  <section class="message">
+  <section class="message" id="main-message">
     Será ya la <span class="gold">4ª</span> vez que nos encontramos en nuestra <span class="mark">ciudad</span>,<br>
     aquí todo es más <span class="script">contenido</span>, casi <span class="script">secreto</span>...<br>
     y sabemos que será más difícil dar rienda suelta a la <span class="script">imaginación</span><br>
@@ -510,7 +634,17 @@ h1 {
     <div class="photo-frame">
       <span class="corner-heart left"></span>
       <span class="corner-heart right"></span>
-      <img src="IMG_260426.jpg" alt="Recuerdos juntos">
+      <img class="romantic-photo" src="IMG_260426.jpg" alt="Recuerdos juntos">
+      <div class="fun-gallery" aria-label="Modo divertido: camino a Soria">
+        <figure class="fun-card fun-card-one">
+          <img src="luxSO01.png" alt="Cristina pilotando una avioneta Luxair hacia Soria">
+          <figcaption>Modo turbo activado</figcaption>
+        </figure>
+        <figure class="fun-card fun-card-two">
+          <img src="luxSO02.png" alt="Cristina llegando en avioneta a Soria con Víctor esperando">
+          <figcaption>Control de torre: ¡ya voy, poca cosa!</figcaption>
+        </figure>
+      </div>
     </div>
     <div class="footer-heart">♡</div>
   </section>
@@ -543,8 +677,40 @@ h1 {
     if (minutesEl) minutesEl.textContent = pad(minutes);
   }
 
+  function updateMood() {
+    // Cambio de tono: 29/04/2026 a las 16:40, hora local del dispositivo.
+    const funMoment = new Date(2026, 3, 29, 16, 40, 0).getTime();
+    const isFunMode = Date.now() >= funMoment;
+
+    document.body.classList.toggle("fun-mode", isFunMode);
+
+    if (isFunMode) {
+      const kicker = document.querySelector(".kicker");
+      const title = document.querySelector("h1");
+      const returnText = document.querySelector(".return");
+      const ribbon = document.querySelector(".date-ribbon");
+      const message = document.getElementById("main-message");
+
+      if (kicker) kicker.textContent = "Actualización de vuelo";
+      if (title) title.textContent = "¡Cristina en aproximación!";
+      if (returnText) returnText.innerHTML = "Destino confirmado: <span class="soria">Soria</span>";
+      if (ribbon) ribbon.innerHTML = "✈ Tripulación preparada · Próxima parada: abrazos y risas";
+      if (message) {
+        message.innerHTML = `
+          A partir de las <span class="gold">16:40</span> esto deja de ser una cuenta atrás solemne<br>
+          y pasa oficialmente a <span class="mark">operación aterrizaje en Soria</span>.<br>
+          La piloto viene fuerte, la avioneta viene con ganas,<br>
+          y abajo hay alguien haciendo de torre de control con un cartel de <span class="script">“te espero”</span>.<br>
+          Queda poco, muy poco... y ahora toca reírnos un poco hasta que llegue el momento ♡
+        `;
+      }
+    }
+  }
+
   updateCountdown();
+  updateMood();
   setInterval(updateCountdown, 1000);
+  setInterval(updateMood, 15000);
 })();
 </script>
 <div class="soria-skyline soria-skyline-bottom" aria-hidden="true"></div>
