@@ -679,7 +679,7 @@ body.fun-mode .date-ribbon {
 
   function updateMood() {
     // Cambio de tono: 29/04/2026 a las 16:30, hora local del dispositivo.
-    const funMoment = new Date(2026, 3, 29, 16, 30, 0).getTime();
+    const funMoment = new Date(2026, 3, 29, 10, 30, 0).getTime();
     const isFunMode = Date.now() >= funMoment;
 
     document.body.classList.toggle("fun-mode", isFunMode);
